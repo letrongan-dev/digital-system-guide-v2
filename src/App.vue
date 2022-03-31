@@ -1,7 +1,7 @@
 <template>
-  <b-container fluid="sm" id="app"  class="border-pink">
+  <div id="app">
     <router-view/>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
-  background-color: rgb(31, 30, 30);
+  background-color: black;
 }
 .border-pink{
   border-top-style: solid;

@@ -26,8 +26,8 @@
         <div class="col-2 text-center">
           <span class="fa fa-star checked"></span>
           <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
           <span class="fa fa-star"></span>
         </div>
         </div>
@@ -41,7 +41,7 @@
           <span class="fa fa-star checked"></span>
           <span class="fa fa-star checked"></span>
           <span class="fa fa-star checked"></span>
-          <span class="fa fa-star"></span>
+          <span class="fa fa-star checked"></span>
         </div>
         </div>
         <div class="container d-flex p-3 card-custom">
@@ -53,7 +53,7 @@
           <span class="fa fa-star checked"></span>
           <span class="fa fa-star checked"></span>
           <span class="fa fa-star checked"></span>
-          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star "></span>
           <span class="fa fa-star"></span>
         </div>
         </div>
@@ -71,16 +71,16 @@
         </div>
         </div>
       </div>
-    <CompFooter/>
+     <div class="mt-3 p-5"></div>
 </div>
 </template>
 
 <script>
-import CompFooter from './ComponentFooter.vue'
+
 export default {
   name: 'CompoMain',
   components: {
-    CompFooter
+
   }
 }
 </script>
