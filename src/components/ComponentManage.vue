@@ -30,7 +30,7 @@
       <input class="input">
       <div class="mt-3">
         <input type="checkbox"/>
-        <span class="m-2">Hide response completed</span>
+        <span class="m-2" style="font-size: 18px">Hide response completed</span>
       </div>
     </div>
   </div>
@@ -50,8 +50,8 @@
   </div>
   <div class="col-10">
     <div style="float: right">
-      <button class="btn button-crud" @click="showPopup = true, itemSelected = ''">Add</button>
-      <button class="btn button-crud">Delete</button>
+      <button class="btn button-crud" @click="showPopup = true, itemSelected = '', file=''">Add</button>
+      <button class="btn button-crud" @click="deleteHandel">Delete</button>
     </div>
   </div>
 </div>
@@ -72,7 +72,7 @@
         </thead>
         <tbody>
           <tr class="body-table" v-for="(item, index) in items" :key="index" :id='(item.programId)'>
-            <td class="text-center"><input type="checkbox"></td>
+            <td class="text-center"><input type="checkbox" @change="item.isSelected = !item.isSelected"></td>
             <td ><div >{{format(item.date)}}</div>
                 <div style="color: grey">{{item.user}}</div>
             </td>
@@ -155,8 +155,8 @@
             </label>
       </div>
       <div class="d-flex mt-3" style="margin-left: 140px">
-        <div @click="previewVideo()" v-if="file!='' || itemSelected!=''">
-          <div style="cursor: pointer">
+        <div v-if="file!='' || itemSelected!=''">
+          <div @click="previewVideo()" style="cursor: pointer">
             <b-icon icon="play-circle" font-scale="1"></b-icon>
             <span style="margin-left: 10px">Video preview</span>
           </div>
@@ -217,7 +217,6 @@ export default {
   },
   methods: {
     closeModal () {
-      this.itemSelected = ''
       this.file = ''
       this.$refs.modal.hide()
       document.querySelectorAll('.close').forEach(item => {
@@ -225,18 +224,16 @@ export default {
           this.showPopup = false
         })
       })
-      if (this.itemSelected !== '') {
-        this.itemSelected.isSelected = false
-      }
     },
     uploadFile (e) {
       document.getElementById('showFile').innerHTML = e.target.files[0].name
       this.file = e.target.files[0]
+      // this.itemSelected.file = this.file
     },
     selectedRow (item) {
-      item.isSelected = true
       this.itemSelected = item
       this.showPopup = true
+      this.file = ''
     },
     format (value) {
       return moment(value).format('YYYY.MM.DD HH:MM')
@@ -255,10 +252,7 @@ export default {
         let reader = new FileReader()
 
         if (this.itemSelected !== '') {
-          reader.readAsDataURL(this.itemSelected.file)
-          reader.addEventListener('load', function () {
-            video.src = reader.result
-          })
+          video.src = require('@/assets/' + this.itemSelected.fileName)
         } else {
           reader.readAsDataURL(this.file)
           reader.addEventListener('load', function () {
@@ -268,6 +262,20 @@ export default {
       } else {
         document.getElementById('video-preview').style.display = 'none'
       }
+    },
+    deleteHandel () {
+      let msg = 'Do you want delete rows ?'
+      let arrDel = this.items.filter(item => item.isSelected)
+      if (confirm(msg) === true && arrDel.length !== 0) {
+        this.items = this.items.filter(item => !item.isSelected)
+        console.log(arrDel)
+        alert('Deleted successfully !')
+      } else {
+        alert('No element delete !')
+      }
+    },
+    searchHandel () {
+      this.items = data.map(item => ({...item, isSelected: false}))
     }
   },
   computed: {
